@@ -6,10 +6,12 @@ import numpy as np
 
 class Detector:
     def __init__(self, image_size, pixel_spacing, image=None, *, cpu=None):
+        self.cpu = cpu
+        if self.is_cpu() and len(image_size) == 2:
+            image_size = Detector.make_detector_size(image_size, 1)
         self.image = np.zeros(image_size, dtype=np.float32) if image is None else image
         self.image_size = image_size
         self.pixel_spacing = pixel_spacing
-        self.cpu = cpu
 
     def to_cpu(self):
         #assert self.cpu is not None

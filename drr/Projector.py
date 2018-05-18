@@ -21,15 +21,10 @@ class Projector:
         image_size = self.target_detector.to_cpu().image_size
         pm_Nx3x4 = geometry_context.projection_matrix
 
-        print(pm_Nx3x4)
-        print(image_size)
-        print(T_Nx4x4)
-
         p_Nx12 = utils.constructProjectionParameter(pm_Nx3x4, np.array(image_size[:2]), T_Nx4x4)
         h_p_Nx12 = p_Nx12.astype(np.float32)
         d_p_Nx12 = driver.np_to_array(h_p_Nx12, order='C')
         t_p_Nx12 = KernelManager.Module.get_texture('t_proj_param_Nx12', d_p_Nx12)
-        print('proj_parameter', p_Nx12)
 
         grid = (16, 16, 1)
         if Projector.grid is None:
@@ -41,10 +36,10 @@ class Projector:
             block=Projector.block, grid=grid
         )
         # Display debug info
-        print_kernel = KernelManager.Module.get_kernel('print_device_params')
-        print_kernel.invoke(
-            texrefs=[t_p_Nx12]
-        )
+        # print_kernel = KernelManager.Module.get_kernel('print_device_params')
+        # print_kernel.invoke(
+        #     texrefs=[t_p_Nx12]
+        # )
 
         return self.target_detector.image
 

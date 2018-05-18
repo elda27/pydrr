@@ -7,7 +7,7 @@ class GeometryContext:
         self.SDD_ = 0.0
         self.pixel_spacing_ = (1.0, 1.0)
         self.image_size_ = (1024, 1024)
-        self.view_matrix_ = None
+        self.view_matrix_ = np.eye(4,4, dtype=np.float32)
         
         self.intrinsic_ = None
         self.extrinsic_ = None
@@ -78,7 +78,8 @@ class GeometryContext:
     @property
     def extrinsic(self):
         if self.extrinsic_ is None:
-            self.extrinsic_ = np.array(np.stack((self.view_matrix, (0, 0, self.SDD)), axis=0))
+            extrinsic_T = utils.convertTransRotTo4x4([0, 0, -self.SOD, 0, 0, 0])
+            self.extrinsic_ = utils.concatenate4x4(extrinsic_T, self.view_matrix)
         return self.extrinsic_
 
     @extrinsic.setter
