@@ -1,6 +1,6 @@
 from pycuda import driver, compiler, gpuarray, tools 
 
-from drr import kernels
+from pydrr import kernels
 from .KernelModule import KernelModule
 
 class KernelManager:

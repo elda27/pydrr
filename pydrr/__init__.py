@@ -1,6 +1,6 @@
 import pycuda.autoinit
-from drr.KernelManager import KernelManager
-from drr.VolumeContext import VolumeContext
-from drr.GeometryContext import GeometryContext
-from drr.Detector import Detector
-from drr.Projector import Projector
+from pydrr.KernelManager import KernelManager
+from pydrr.VolumeContext import VolumeContext
+from pydrr.GeometryContext import GeometryContext
+from pydrr.Detector import Detector
+from pydrr.Projector import Projector
