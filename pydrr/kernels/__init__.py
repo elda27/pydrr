@@ -170,7 +170,7 @@ __global__ void render_with_linear_interp(float *d_image_N)
     for(float travelled_length = 0; travelled_length < (tfar-tnear); travelled_length += d_step_size_mm, cur += delta_dir){
         // pick the density value at the current point and accumulate it (Note: currently consider only single input volume case)
         // access to register memory and texture memory (filterMode of texture should be 'linear')
-        RPL += tex3D(t_volume, cur.z, cur.y, cur.x)*d_step_size_mm;
+        RPL += tex3D(t_volume, cur.z, cur.y, cur.x) * d_step_size_mm;
     }
 
     d_image_N[x*int(d_image_size.z)*int(d_image_size.y)+y*int(d_image_size.z)+z] += RPL;

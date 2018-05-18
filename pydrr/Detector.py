@@ -36,5 +36,13 @@ class Detector:
         return self.cpu is not None
 
     @staticmethod
+    def from_geometry(geometry_context, T_Nx4x4):
+        n_proj = geometry_context.projection_matrix.shape[0] if geometry_context.projection_matrix.ndim == 3 else 1
+        n_T = T_Nx4x4.shape[0] if T_Nx4x4.ndim == 3 else 1
+
+        image_size = Detector.make_detector_size(geometry_context.image_size, n_proj * n_T)
+        return Detector(image_size, geometry_context.pixel_spacing)
+
+    @staticmethod
     def make_detector_size(image_size, n_channels):
         return np.array((image_size[0], image_size[1], n_channels), dtype=np.int32)

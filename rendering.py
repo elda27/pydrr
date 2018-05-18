@@ -1,8 +1,8 @@
-import drr
+import pydrr
 import mhd
 import matplotlib.pyplot as plt
 import numpy as np
-from drr import utils
+from pydrr import utils
 
 def main():
     # Load materials
@@ -13,19 +13,20 @@ def main():
     volume = np.transpose(volume, (2, 1, 0))
     spacing = header['ElementSpacing']
     #volume, spacing, _ = utils.load_volume(mhd_filename)
-    volume = drr.utils.HU2Myu(volume - 1000, 0.2683)
+    volume = pydrr.utils.HU2Myu(volume - 1000, 0.2683)
 
     pm_Nx3x4, image_size, image_spacing = load_test_projection_matrix()
     T_Nx4x4 = load_test_transform_matrix()
 
     # Construct objects
-    volume_context = drr.VolumeContext(volume.astype(np.float32), spacing)
-    geometry_context = drr.GeometryContext()
+    volume_context = pydrr.VolumeContext(volume.astype(np.float32), spacing)
+    geometry_context = pydrr.GeometryContext()
     geometry_context.projection_matrix = pm_Nx3x4
 
     n_channels = T_Nx4x4.shape[0] * pm_Nx3x4.shape[0]
-    detector = drr.Detector(drr.Detector.make_detector_size(image_size, n_channels), image_spacing)
-    projector = drr.Projector(detector, 1.0).to_gpu()
+    detector = pydrr.Detector(pydrr.Detector.make_detector_size(image_size, n_channels), image_spacing)
+    # detector = pydrr.Detector.from_geometry(geometry_context, T_Nx4x4) 
+    projector = pydrr.Projector(detector, 1.0).to_gpu()
 
     # Host memory -> (Device memory) -> Texture memory
     t_volume_context = volume_context.to_texture()
