@@ -1,1 +1,0 @@
-DRR generation by pycuda
