@@ -7,13 +7,13 @@ from pydrr import utils
 def main():
     # Load materials
     #mhd_filename = r'D:\Users\kabashima\Workspace\RibSegmentation\data\CXDI40C_01\volume\upsampled_CXDI40C_01.mhd'
-    mhd_filename = 'CXDI40C_01.mhd'
+    mhd_filename = 'image.mhd'
     #mhd_filename = r'upsampled_CXDI40C_01.mhd'
     volume, header = mhd.read(mhd_filename)
-    volume = np.transpose(volume, (2, 1, 0))
+    volume = np.transpose(volume, (2, 1, 0)).copy()
     spacing = header['ElementSpacing']
     #volume, spacing, _ = utils.load_volume(mhd_filename)
-    volume = pydrr.utils.HU2Myu(volume - 1000, 0.2683)
+    volume = pydrr.utils.HU2Myu(volume - 700, 0.2683)
 
     pm_Nx3x4, image_size, image_spacing = load_test_projection_matrix()
     T_Nx4x4 = load_test_transform_matrix()

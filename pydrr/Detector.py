@@ -9,7 +9,8 @@ class Detector:
         self.cpu = cpu
         if self.is_cpu() and len(image_size) == 2:
             image_size = Detector.make_detector_size(image_size, 1)
-        self.image = np.zeros(image_size, dtype=np.float32) if image is None else image
+        #self.image = self.alloc(image_size) if image is None else image
+        self.image = np.ascontiguousarray(np.zeros(image_size, dtype=np.float32)) if image is None else image
         self.image_size = image_size
         self.pixel_spacing = pixel_spacing
 
@@ -34,6 +35,10 @@ class Detector:
 
     def is_gpu(self):
         return self.cpu is not None
+
+    def alloc(self, image_size):
+        return np.transpose(np.zeros((image_size[2],image_size[1],image_size[0]), dtype=np.float32))
+
 
     @staticmethod
     def from_geometry(geometry_context, T_Nx4x4):

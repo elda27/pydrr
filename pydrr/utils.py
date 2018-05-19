@@ -303,6 +303,5 @@ def test_convertTransRotTo4x4():
     np.testing.assert_array_almost_equal(
         transrot_Nx6, convert4x4ToTransRot(matrix_Nx4x4), verbose=True)
 
-
 if __name__ == "__main__":
     test_convertTransRotTo4x4()

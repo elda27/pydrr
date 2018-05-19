@@ -39,10 +39,10 @@ class Projector:
             block=Projector.block, grid=grid
         )
         # Display debug info
-        # print_kernel = KernelManager.Module.get_kernel('print_device_params')
-        # print_kernel.invoke(
-        #     texrefs=[t_p_Nx12]
-        # )
+        print_kernel = KernelManager.Module.get_kernel('print_device_params')
+        print_kernel.invoke(
+            texrefs=[t_p_Nx12]
+        )
 
         return self.target_detector.image
 
