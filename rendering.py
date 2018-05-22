@@ -10,8 +10,9 @@ def main():
     mhd_filename = 'image.mhd'
     #mhd_filename = r'upsampled_CXDI40C_01.mhd'
     volume, header = mhd.read(mhd_filename)
-    volume = np.transpose(volume, (2, 1, 0)).copy()
     spacing = header['ElementSpacing']
+    spacing = spacing[::-1]
+
     #volume, spacing, _ = utils.load_volume(mhd_filename)
     volume = pydrr.utils.HU2Myu(volume - 700, 0.2683)
 

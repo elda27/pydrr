@@ -10,7 +10,7 @@ class Projector:
     block = (32, 32, 1)
     grid  = None
 
-    def __init__(self, target_detector, step_size_mm, *, cpu=None):
+    def __init__(self, target_detector, step_size_mm = 1, *, cpu=None):
         self.target_detector = target_detector
         self.step_size_mm = step_size_mm
         self.cpu = cpu
@@ -39,10 +39,8 @@ class Projector:
             block=Projector.block, grid=grid
         )
         # Display debug info
-        print_kernel = KernelManager.Module.get_kernel('print_device_params')
-        print_kernel.invoke(
-            texrefs=[t_p_Nx12]
-        )
+        # print_kernel = KernelManager.Module.get_kernel('print_device_params')
+        # print_kernel.invoke(texrefs=[t_p_Nx12])
 
         return self.target_detector.image
 
