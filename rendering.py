@@ -26,7 +26,7 @@ def main():
 
     n_channels = T_Nx4x4.shape[0] * pm_Nx3x4.shape[0]
     detector = pydrr.Detector(pydrr.Detector.make_detector_size(image_size, n_channels), image_spacing)
-    # detector = pydrr.Detector.from_geometry(geometry_context, T_Nx4x4) 
+    # detector = pydrr.Detector.from_geometry(geometry_context, T_Nx4x4) # You can use from_geometry if you set pixel_size and image_size.
     projector = pydrr.Projector(detector, 1.0).to_gpu()
 
     # Host memory -> (Device memory) -> Texture memory
