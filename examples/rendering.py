@@ -1,14 +1,13 @@
 import pydrr
 import mhd
 import matplotlib.pyplot as plt
+import mpl_toolkits.axes_grid1
 import numpy as np
 from pydrr import utils
 
 def main():
     # Load materials
-    #mhd_filename = r'D:\Users\kabashima\Workspace\RibSegmentation\data\CXDI40C_01\volume\upsampled_CXDI40C_01.mhd'
     mhd_filename = 'image.mhd'
-    #mhd_filename = r'upsampled_CXDI40C_01.mhd'
     volume, header = mhd.read(mhd_filename)
     spacing = header['ElementSpacing']
     spacing = spacing[::-1]
@@ -40,10 +39,11 @@ def main():
     plt.figure(figsize=(16,9))
     n_show_channels = 3
     for i in range(min(image.shape[2], n_show_channels)):
-        plt.subplot(1, min(image.shape[2], n_show_channels), i+1)
-        plt.imshow(image[:, :, i])
-        plt.gray()
-        plt.colorbar()
+        ax = plt.subplot(1, min(image.shape[2], n_show_channels), i+1)
+        divider = mpl_toolkits.axes_grid1.make_axes_locatable(ax)
+        cax = divider.append_axes('right', '5%', pad='3%')
+        im = ax.imshow(image[:, :, i], interpolation='none', cmap='gray')
+        fig.colorbar(im, cax=cax)
     plt.show()
 
 def load_test_projection_matrix(SDD=2000, SOD=1800, image_size=[1280, 1280], spacing=[0.287, 0.287] ):
