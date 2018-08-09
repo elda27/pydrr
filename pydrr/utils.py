@@ -175,7 +175,7 @@ def convertTransRotTo4x4(transrot_Nx6, is_radians=False):
     elif ndim == 1 and transrot_Nx6.shape[0] == 6:
         transrot_Nx6 = np.expand_dims(transrot_Nx6, axis=0)
     else:
-        raise ValueError('unexpected shape')
+        raise ValueError('unexpected shape: ndim is 1 or 2 and first or second shape is 6. Actual:{}'.format(transrot_Nx6))
 
     N = transrot_Nx6.shape[0]
 
@@ -280,6 +280,11 @@ def convertRot3x3ToRPY(R_Nx3x3, is_radians=False, eps=np.finfo(float).eps):
 
     return rot_Nx3
 
+def matTranslation(vector):
+    assert len(vector) == 3
+    e = np.eye(4)
+    e[3, 0:3] = vector
+    return e
 
 def test_convertTransRotTo4x4():
 

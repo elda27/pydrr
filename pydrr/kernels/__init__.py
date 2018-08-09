@@ -152,7 +152,12 @@ __global__ void render_with_linear_interp(float *d_image_N)
     int y = blockDim.y * blockIdx.y + threadIdx.y;
     int z = blockDim.z * blockIdx.z + threadIdx.z;
 
-    if (x >= d_image_size.x && y >= d_image_size.y && z >= d_image_size.z) return;
+    int index = x*int(d_image_size.z)*int(d_image_size.y)+y*int(d_image_size.z)+z;
+    //if (index >= (d_image_size.x * d_image_size.y * d_image_size.z)) return;
+    if (index >= (d_image_size.x * d_image_size.y * d_image_size.z) ||
+        (x >= d_image_size.x || y >= d_image_size.y || z >= d_image_size.z)
+        )
+        return;
         
     Ray ray = computeNormalizedRay(
         ((float)x+0.5f)/d_image_size.x, 
@@ -173,7 +178,7 @@ __global__ void render_with_linear_interp(float *d_image_N)
         RPL += tex3D(t_volume, cur.z, cur.y, cur.x) * d_step_size_mm;
     }
 
-    d_image_N[x*int(d_image_size.z)*int(d_image_size.y)+y*int(d_image_size.z)+z] += RPL;
+    d_image_N[index] += RPL;
 }
 
 // Debug print

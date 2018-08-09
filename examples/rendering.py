@@ -1,4 +1,5 @@
 import pydrr
+import pydrr.autoinit
 import mhd
 import matplotlib.pyplot as plt
 import mpl_toolkits.axes_grid1
