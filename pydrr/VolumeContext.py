@@ -10,7 +10,7 @@ class VolumeContext:
         if volume is None:
             return
         
-        if not volume.flags['C_CONTIGUOUS']:
+        if not volume.flags['C_CONTIGUOUS']: # The array must be contiguous array for gpu copy.
             volume = np.ascontiguousarray(volume, dtype=np.float32)
         
         self.volume = volume
