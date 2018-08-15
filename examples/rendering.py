@@ -1,19 +1,24 @@
 import pydrr
 import pydrr.autoinit
-import mhd
+import SimpleITK as sitk
 import matplotlib.pyplot as plt
 import mpl_toolkits.axes_grid1
 import numpy as np
+import sys
 from pydrr import utils
 
 def main():
+    if len(sys.argv) < 2:
+        print('rendering.py <volume path>')
+        return
+
+    mhd_filename = sys.argv[0]
     # Load materials
-    mhd_filename = 'image.mhd'
-    volume, header = mhd.read(mhd_filename)
-    spacing = header['ElementSpacing']
+    itkimage = sitk.ReadImage(mhd_filename)
+    volume = ct_scan = sitk.GetArrayFromImage(itkimage)
+    spacing = itkimage.GetSpacing()
     spacing = spacing[::-1]
 
-    #volume, spacing, _ = utils.load_volume(mhd_filename)
     volume = pydrr.utils.HU2Myu(volume - 700, 0.2683)
 
     pm_Nx3x4, image_size, image_spacing = load_test_projection_matrix()
