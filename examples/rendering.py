@@ -15,7 +15,7 @@ def main():
     mhd_filename = sys.argv[0]
     # Load materials
     itkimage = sitk.ReadImage(mhd_filename)
-    volume = ct_scan = sitk.GetArrayFromImage(itkimage)
+    volume  = sitk.GetArrayFromImage(itkimage)
     spacing = itkimage.GetSpacing()
     spacing = spacing[::-1]
 
