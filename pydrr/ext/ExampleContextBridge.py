@@ -8,9 +8,6 @@ class ExampleContextBridge:
     @classmethod
     def get_pointer(cls, array):
         """Get device pointer from user type.
-        
-        Args:
-            array (Any): Any type.
         """
 
         raise NotImplementedError
@@ -18,18 +15,12 @@ class ExampleContextBridge:
     @classmethod
     def get_shape(cls, array):
         """Get array shape from user type.
-        
-        Args:
-            array (Any): Any type.
         """
         raise NotImplementedError
 
     @classmethod
     def get_cpu_array(cls, array):
         """Construct numpy array from user type.
-        
-        Args:
-            array ([type]): [description]
         """
         raise NotImplementedError
 
