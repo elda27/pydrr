@@ -4,7 +4,7 @@ import pycuda.autoinit
 import pydrr.autoinit
 
 def generate_drr(volume, spacing, **kwargs):
-    """Generate DRR(Digitaly Reconstruct Remastering) image from volume.
+    """Generate DRR(Digitaly Reconstruct Radiography) image from volume.
     
     Args:
         volume (numpy.array): three-dimensional array. This volume is aligned by z, y, x
